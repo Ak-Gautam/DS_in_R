@@ -19,17 +19,17 @@ ggplot(marketing, aes(x = youtube, y = sales)) +
 
 # Split data into training and test sets
 set.seed(123)
-training.samples <- marketing$sales %>% createDataPartition(p = 0.6, list = FALSE)
-train.data <- marketing[training.samples,]
-test.data <- marketing[-training.samples,]
+samples <-  createDataPartition(marketing$sales, p = 0.6, list = FALSE)
+train <- marketing[training.samples,]
+test <- marketing[-training.samples,]
 
 # Fit linear regression model and make predictions
-model <- lm(sales ~ youtube, data = train.data)
-predictions <- predict(model, newdata = test.data)
+model <- lm(sales ~ youtube, data = train)
+predictions <- predict(model, newdata = test)
 
 # Compute evaluation metrics
-rmse <- RMSE(predictions, test.data$sales)
-r2 <- R2(predictions, test.data$sales)
+rmse <- RMSE(predictions, test$sales)
+r2 <- R2(predictions, test$sales)
 
 # Make predictions for new data
 newdata <- data.frame(youtube = c(0, 1000))
